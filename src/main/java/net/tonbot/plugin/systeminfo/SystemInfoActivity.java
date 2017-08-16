@@ -3,10 +3,10 @@ package net.tonbot.plugin.systeminfo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
-import com.tonberry.tonbot.common.Activity;
-import com.tonberry.tonbot.common.ActivityDescriptor;
-import com.tonberry.tonbot.common.BotUtils;
 
+import net.tonbot.common.Activity;
+import net.tonbot.common.ActivityDescriptor;
+import net.tonbot.common.BotUtils;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.ComputerSystem;
