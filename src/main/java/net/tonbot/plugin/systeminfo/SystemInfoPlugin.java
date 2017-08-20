@@ -18,7 +18,7 @@ public class SystemInfoPlugin extends TonbotPlugin {
 	public SystemInfoPlugin(TonbotPluginArgs args) {
 		super(args);
 
-		this.injector = Guice.createInjector(new SystemInfoModule(args.getPrefix()));
+		this.injector = Guice.createInjector(new SystemInfoModule(args.getPrefix(), args.getBotUtils()));
 	}
 
 	@Override

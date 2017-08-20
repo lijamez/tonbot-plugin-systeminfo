@@ -22,10 +22,12 @@ public class SystemInfoActivity implements Activity {
 			.description("Displays system information.")
 			.build();
 
+	private final BotUtils botUtils;
 	private final SystemInfo systemInfo;
 
 	@Inject
-	public SystemInfoActivity(SystemInfo systemInfo) {
+	public SystemInfoActivity(BotUtils botUtils, SystemInfo systemInfo) {
+		this.botUtils = Preconditions.checkNotNull(botUtils, "botUtils must be non-null.");
 		this.systemInfo = Preconditions.checkNotNull(systemInfo, "systemInfo must be non-null.");
 	}
 
@@ -60,6 +62,6 @@ public class SystemInfoActivity implements Activity {
 		int cpuLoadPercent = (int) (processor.getSystemCpuLoad() * 100);
 		embedBuilder.appendField("CPU Load", Integer.toString(cpuLoadPercent) + "%", true);
 
-		BotUtils.sendEmbeddedContent(event.getChannel(), embedBuilder.build());
+		botUtils.sendEmbed(event.getChannel(), embedBuilder.build());
 	}
 }
