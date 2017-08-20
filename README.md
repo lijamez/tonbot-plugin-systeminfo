@@ -1,1 +1,1 @@
-# tonbot-plugin-systeminfo
+# tonbot-plugin-systeminfo [![Build Status](https://travis-ci.org/lijamez/tonbot-plugin-systeminfo.svg?branch=master)](https://travis-ci.org/lijamez/tonbot-plugin-systeminfo)
