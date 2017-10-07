@@ -24,11 +24,16 @@ public class SystemInfoActivity implements Activity {
 
 	private final BotUtils botUtils;
 	private final SystemInfo systemInfo;
+	private final Runtime runtime;
 
 	@Inject
-	public SystemInfoActivity(BotUtils botUtils, SystemInfo systemInfo) {
+	public SystemInfoActivity(
+			BotUtils botUtils,
+			SystemInfo systemInfo,
+			Runtime runtime) {
 		this.botUtils = Preconditions.checkNotNull(botUtils, "botUtils must be non-null.");
 		this.systemInfo = Preconditions.checkNotNull(systemInfo, "systemInfo must be non-null.");
+		this.runtime = Preconditions.checkNotNull(runtime, "runtime must be non-null.");
 	}
 
 	@Override
@@ -56,8 +61,15 @@ public class SystemInfoActivity implements Activity {
 		long memUsedMb = (mem.getTotal() - mem.getAvailable()) / 1000000;
 		long memTotalMb = mem.getTotal() / 1000000;
 		int memUsedPercent = (int) (((double) memUsedMb / memTotalMb) * 100);
-		embedBuilder.appendField("Memory Usage", memUsedMb + " / " + memTotalMb + " MB (" + memUsedPercent + "%)",
+		embedBuilder.appendField("System Memory Usage",
+				memUsedMb + " / " + memTotalMb + " MB (" + memUsedPercent + "%)",
 				true);
+
+		long heapUsedMb = runtime.totalMemory() / 1000000;
+		long heapMaxMb = runtime.maxMemory() / 1000000;
+		int heapUsedPercent = (int) (((double) heapUsedMb / heapMaxMb) * 100);
+		embedBuilder.appendField("Java Heap Usage",
+				heapUsedMb + " MB out of " + heapMaxMb + " MB (" + heapUsedPercent + "%)", true);
 
 		int cpuLoadPercent = (int) (processor.getSystemCpuLoad() * 100);
 		embedBuilder.appendField("CPU Load", Integer.toString(cpuLoadPercent) + "%", true);

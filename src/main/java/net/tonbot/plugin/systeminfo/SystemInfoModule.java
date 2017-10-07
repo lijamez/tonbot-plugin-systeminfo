@@ -32,4 +32,10 @@ class SystemInfoModule extends AbstractModule {
 	Set<Activity> activities(SystemInfoActivity systemInfoActivity) {
 		return ImmutableSet.of(systemInfoActivity);
 	}
+
+	@Provides
+	@Singleton
+	Runtime runtime() {
+		return Runtime.getRuntime();
+	}
 }
