@@ -1,7 +1,6 @@
 package net.tonbot.plugin.systeminfo;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
 import net.tonbot.common.Activity;
@@ -18,7 +17,7 @@ import sx.blah.discord.util.EmbedBuilder;
 public class SystemInfoActivity implements Activity {
 
 	private static final ActivityDescriptor ACTIVITY_DESCRIPTOR = ActivityDescriptor.builder()
-			.route(ImmutableList.of("systeminfo"))
+			.route("systeminfo")
 			.description("Displays system information.")
 			.build();
 
@@ -70,7 +69,7 @@ public class SystemInfoActivity implements Activity {
 		int heapUsedPercent = (int) (((double) heapUsedMb / heapMaxMb) * 100);
 		embedBuilder.appendField("Java Heap Usage",
 				heapUsedMb + " MB out of " + heapMaxMb + " MB (" + heapUsedPercent + "%)", true);
-
+		
 		int cpuLoadPercent = (int) (processor.getSystemCpuLoad() * 100);
 		embedBuilder.appendField("CPU Load", Integer.toString(cpuLoadPercent) + "%", true);
 
