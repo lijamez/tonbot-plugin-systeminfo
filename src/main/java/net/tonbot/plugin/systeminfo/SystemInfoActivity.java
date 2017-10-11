@@ -56,6 +56,7 @@ public class SystemInfoActivity implements Activity {
 		CentralProcessor processor = systemInfo.getHardware().getProcessor();
 		embedBuilder.appendField("Processor", processor.getName(), true);
 
+		// System Memory Usage
 		GlobalMemory mem = systemInfo.getHardware().getMemory();
 		long memUsedMb = (mem.getTotal() - mem.getAvailable()) / 1000000;
 		long memTotalMb = mem.getTotal() / 1000000;
@@ -64,14 +65,23 @@ public class SystemInfoActivity implements Activity {
 				memUsedMb + " / " + memTotalMb + " MB (" + memUsedPercent + "%)",
 				true);
 
-		long heapUsedMb = runtime.totalMemory() / 1000000;
+		// JVM Memory Usage
+		long heapUsedMb = (runtime.totalMemory() - runtime.freeMemory()) / 1000000;
 		long heapMaxMb = runtime.maxMemory() / 1000000;
 		int heapUsedPercent = (int) (((double) heapUsedMb / heapMaxMb) * 100);
-		embedBuilder.appendField("Java Heap Usage",
+		embedBuilder.appendField("JVM Memory Usage",
 				heapUsedMb + " MB out of " + heapMaxMb + " MB (" + heapUsedPercent + "%)", true);
-		
-		int cpuLoadPercent = (int) (processor.getSystemCpuLoad() * 100);
-		embedBuilder.appendField("CPU Load", Integer.toString(cpuLoadPercent) + "%", true);
+
+		// CPU Load
+		double cpuLoad = processor.getSystemCpuLoad();
+		String cpuLoadStr;
+		if (cpuLoad < 0) {
+			cpuLoadStr = "Unknown";
+		} else {
+			int cpuLoadPercent = (int) (processor.getSystemCpuLoad() * 100);
+			cpuLoadStr = Integer.toString(cpuLoadPercent) + "%";
+		}
+		embedBuilder.appendField("CPU Load", cpuLoadStr, true);
 
 		botUtils.sendEmbed(event.getChannel(), embedBuilder.build());
 	}
